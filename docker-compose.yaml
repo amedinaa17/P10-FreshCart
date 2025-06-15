@@ -1,0 +1,23 @@
+version: '3.8'
+services:
+  backend:
+    build:
+      context: ./backend/
+      dockerfile: Dockerfile  # Dockerfile para el backend
+    ports:
+      - "3001:3001"
+    networks:
+      - mynetwork
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile  # Dockerfile para el frontend
+    ports:
+      - "80:80"
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    driver: bridge
