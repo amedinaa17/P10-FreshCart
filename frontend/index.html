@@ -73,7 +73,7 @@
         // Función para agregar un nuevo producto (POST)
         function addProducto() {
             const nombre = document.getElementById("nombre").value;
-            const descripcion = document.getElementById("categoria").value;
+            const categoria = document.getElementById("categoria").value;
             const precio = document.getElementById("precio").value;
 
             if (!nombre || !categoria || !precio) {
@@ -109,9 +109,9 @@
         }
 
         // Función para editar un producto
-        function editarProducto(id, nombre, precio, descripcion) {
+        function editarProducto(id, nombre, precio, categoria) {
             document.getElementById("editar-nombre").value = nombre;
-            document.getElementById("editar-categoria").value = descripcion;
+            document.getElementById("editar-categoria").value = categoria;
             document.getElementById("editar-precio").value = precio;
             document.getElementById("editar-producto-id").value = id;
 
@@ -123,7 +123,7 @@
         function actualizarProducto() {
             const id = document.getElementById("editar-producto-id").value;
             const nombre = document.getElementById("editar-nombre").value;
-            const descripcion = document.getElementById("editar-categoria").value;
+            const categoria = document.getElementById("editar-categoria").value;
             const precio = document.getElementById("editar-precio").value;
 
             fetch(`${apiUrl}/${id}`, {
@@ -194,7 +194,6 @@
                 <table class="table table-bordered table-hover table-sm">
                     <thead style="background-color: #0aad0a; color: white;">
                         <tr>
-                            <th class="ps-3">Imagen</th>
                             <th class="ps-3">Nombre del Producto</th>
                             <th class="ps-3">Categoría</th>
                             <th class="ps-3">Precio</th>
@@ -206,6 +205,137 @@
                 </table>
             </div>
 
+        </div>
+    </div>
+
+    <!-- Modal de agregar producto -->
+    <div class="modal fade" id="modalAgregarProducto" tabindex="-1" aria-labelledby="modalAgregarProductoLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalAgregarProductoLabel">Agregar Producto</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="add-product-form">
+                        <div class="form-floating mb-3">
+                            <input type="text" id="nombre" class="form-control" id="floatingInput" placeholder="">
+                            <label for="floatingInput">Nombre del Producto</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="number" id="precio" class="form-control" id="floatingInput" placeholder="">
+                            <label for="floatingInput">Precio del Producto</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input id="categoria" class="form-control" id="floatingInput" placeholder="">
+                            <label for="floatingInput">Categoría del Producto</label>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <button type="button" class="btn btn-success mt-2"
+                                style="background-color: #83cb68; border-color: #83cb68;"
+                                onclick="addProducto()">Agregar</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para actualizar de producto -->
+    <div class="modal fade" id="modalActualizarProducto" tabindex="-1" aria-labelledby="modalActualizarProductoLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalActualizarProductoLabel">Actualizar Producto</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="edit-product-form">
+                        <input type="hidden" id="editar-producto-id">
+                        <div class="form-floating mb-3">
+                            <input type="text" id="editar-nombre" class="form-control" id="floatingInput"
+                                placeholder="">
+                            <label for="floatingInput">Nombre del Producto</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="number" id="editar-precio" class="form-control" id="floatingInput"
+                                placeholder="">
+                            <label for="floatingInput">Precio del Producto</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input id="editar-categoria" class="form-control" id="floatingInput" placeholder="">
+                            <label for="floatingInput">Categoría del Producto</label>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <button type="button" class="btn btn-success mt-2"
+                                style="background-color: #eadf52; border-color: #eadf52;"
+                                onclick="actualizarProducto()">Actualizar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de confirmación de eliminar -->
+    <div class="modal fade" id="modalConfirmacionEliminar" tabindex="-1"
+        aria-labelledby="modalConfirmacionEliminarLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalConfirmacionEliminarLabel">Confirmar Eliminación</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ¿Estás seguro de que deseas eliminar este producto?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn" style="background-color: #E6EBE0; border-color: #E6EBE0;"
+                        data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-success"
+                        style="background-color: #ED6A5A; border-color: #ED6A5A;"
+                        onclick="deleteProducto()">Eliminar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de éxito -->
+    <div class="modal fade" id="modalExito" tabindex="-1" aria-labelledby="modalExitoLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalExitoLabel">Éxito</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modal-exito-body"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success"
+                        style="background-color: #9bc1bc; border-color: #9bc1bc;"
+                        data-bs-dismiss="modal">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de error -->
+    <div class="modal fade" id="modalError" tabindex="-1" aria-labelledby="modalErrorLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalErrorLabel">Error</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modal-error-body"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success"
+                        style="background-color: #ED6A5A; border-color: #ED6A5A;"
+                        data-bs-dismiss="modal">Aceptar</button>
+                </div>
+            </div>
         </div>
     </div>
 
