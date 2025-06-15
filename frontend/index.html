@@ -11,7 +11,7 @@
     <title>FreshCart</title>
     <script>
         // URL del servicio REST
-        const apiUrl = "http://localhost:3001/api/productos";  // Cambiar el puerto
+        const apiUrl = "http://34.61.62.82:3001/api/productos";  // Cambiar el puerto
 
         let productoAEliminarId = null;
 
@@ -25,12 +25,11 @@
                     data.forEach(producto => {
                         const productoRow = document.createElement('tr');
                         productoRow.innerHTML = `
-                            <td class='text-center'><img src="../images/${producto.imagen}.png" height="50px"></td>
                             <td>${producto.nombre}</td>
                             <td>${producto.categoria}</td>
                             <td class='text-center'>$${producto.precio}</td>
                             <td class='text-center'>
-                                <button class="btn btn-primary" style="background-color: #36C9C6; border-color: #36C9C6;" onclick="editarProducto(${producto.id}, '${producto.nombre}', ${producto.precio}, '${producto.descripcion}')"><i class="bi bi-pencil-fill"></i></button>
+                                <button class="btn btn-primary" style="background-color: #36C9C6; border-color: #36C9C6;" onclick="editarProducto(${producto.id}, '${producto.nombre}', ${producto.precio}, '${producto.categoria}')"><i class="bi bi-pencil-fill"></i></button>
                                 <button class="btn btn-danger" style="background-color: #ED6A5A; border-color: #ED6A5A;" onclick="confirmarEliminarProducto(${producto.id})"><i class="bi bi-trash-fill"></i></button>
                             </td>
                         `;
@@ -74,10 +73,10 @@
         // Función para agregar un nuevo producto (POST)
         function addProducto() {
             const nombre = document.getElementById("nombre").value;
-            const descripcion = document.getElementById("descripcion").value;
+            const descripcion = document.getElementById("categoria").value;
             const precio = document.getElementById("precio").value;
 
-            if (!nombre || !descripcion || !precio) {
+            if (!nombre || !categoria || !precio) {
                 alert("Por favor ingrese todos los datos.");
                 return;
             }
@@ -87,14 +86,14 @@
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ nombre: nombre, descripcion: descripcion, precio: parseFloat(precio) })
+                body: JSON.stringify({ nombre: nombre, categoria: categoria, precio: parseFloat(precio) })
             })
                 .then(response => response.json())
                 .then(() => {
                     const modal = bootstrap.Modal.getInstance(document.getElementById('modalAgregarProducto'));
                     modal.hide();
                     document.getElementById("nombre").value = '';
-                    document.getElementById("descripcion").value = '';
+                    document.getElementById("categoria").value = '';
                     document.getElementById("precio").value = '';
 
                     document.getElementById('modal-exito-body').textContent = 'Producto agregado con éxito';
@@ -112,7 +111,7 @@
         // Función para editar un producto
         function editarProducto(id, nombre, precio, descripcion) {
             document.getElementById("editar-nombre").value = nombre;
-            document.getElementById("editar-descripcion").value = descripcion;
+            document.getElementById("editar-categoria").value = descripcion;
             document.getElementById("editar-precio").value = precio;
             document.getElementById("editar-producto-id").value = id;
 
@@ -124,7 +123,7 @@
         function actualizarProducto() {
             const id = document.getElementById("editar-producto-id").value;
             const nombre = document.getElementById("editar-nombre").value;
-            const descripcion = document.getElementById("editar-descripcion").value;
+            const descripcion = document.getElementById("editar-categoria").value;
             const precio = document.getElementById("editar-precio").value;
 
             fetch(`${apiUrl}/${id}`, {
@@ -132,7 +131,7 @@
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ id: id, nombre: nombre, precio: parseFloat(precio), descripcion: descripcion })
+                body: JSON.stringify({ id: id, nombre: nombre, precio: parseFloat(precio), categoria: categoria })
             })
                 .then(response => response.json())
                 .then(() => {
@@ -163,7 +162,7 @@
     <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container-fluid ms-5">
             <a class="navbar-brand" href="#">
-                <img src="../images/icon.png" height="30px" style="margin-top: -3px;">
+                <i class="bi bi-cart4" style="color: #0aad0a; font-size: 35px;"></i>
                 <span style="font-size: larger; font-weight: bold;" class="">FreshCart</span>
             </a>
         </div>
