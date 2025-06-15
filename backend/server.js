@@ -10,11 +10,11 @@ app.get('/', (req, res) => {
 });
 
 let productos = [
-  { id: 1, imagen:'producto1', nombre: 'Plátano chiapas ', categoria: 'Frutas y Verduras', precio: 28.90 },
-  { id: 2, imagen:'producto2', nombre: 'Leche Alpura deslactosada', categoria: 'Lactéos', precio: 51 },
-  { id: 3, imagen:'producto3', nombre: 'Cereal Kelloggs Zucaritas', categoria: 'Cereales', precio: 88 },
-  { id: 4, imagen:'producto4', nombre: 'Mayonesa McCormick', categoria: 'Mayonesas', precio: 56 },
-  { id: 5, imagen:'producto5', nombre: 'Pan Bimbo blanco', categoria: 'Cereales', precio: 44.50 },
+  { id: 1, nombre: 'Plátano chiapas ', categoria: 'Frutas y Verduras', precio: 28.90 },
+  { id: 2, nombre: 'Leche Alpura deslactosada', categoria: 'Lactéos', precio: 51 },
+  { id: 3, nombre: 'Cereal Kelloggs Zucaritas', categoria: 'Cereales', precio: 88 },
+  { id: 4, nombre: 'Mayonesa McCormick', categoria: 'Mayonesas', precio: 56 },
+  { id: 5, nombre: 'Pan Bimbo blanco', categoria: 'Cereales', precio: 44.50 },
 ];
 
 // GET - Obtener todos los productos
@@ -34,7 +34,6 @@ app.post('/api/productos', (req, res) => {
   const { nombre, categoria, precio } = req.body;
   const producto = {
     id: productos.length + 1,
-    imagen: 'producto0',
     nombre,
     categoria,
     precio
